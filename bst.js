@@ -100,7 +100,7 @@ class Tree{
     }
 
     levelOrder(callback,root = this.root){
-        if(typeof callback != 'function'){
+        if(typeof callback !== 'function'){
             throw new Error('Callback Required')
         }
         if(root == null) return
@@ -112,10 +112,46 @@ class Tree{
             callback(current)
 
             if(current.left) queue.push(current.left)
-            if(current.right ) queue.push(current.right)
+            if(current.right) queue.push(current.right)
         } 
-
     }
+
+    preOrder(callback,root= this.root){
+        if(typeof callback !== 'function'){
+            throw new Error('Callback Required')
+        }
+
+        if(root == null) return
+
+        callback(root)
+        this.preOrder(callback,root.left)
+        this.preOrder(callback,root.right)
+    }
+
+    inOrder(callback,root=this.root){
+        if(typeof callback !== 'function'){
+            throw new Error('Callback Required')
+        }
+
+        if(root == null) return
+
+        this.inOrder(callback,root.left)
+        callback(root)
+        this.inOrder(callback,root.right)
+    }
+
+    postOrder(callback,root=this.root){
+        if(typeof callback !== 'function'){
+            throw new Error('Callback Required')
+        }
+
+        if(root == null) return
+
+        this.postOrder(callback,root.left)
+        this.postOrder(callback,root.right)
+        callback(root)
+    }
+
     printTree(){
         prettyPrint(this.root)
     }
@@ -136,5 +172,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 const test = new Tree()
 test.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-test.levelOrder(node=>console.log(node.data))
+test.printTree()
   
